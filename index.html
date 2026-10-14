@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="courseApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CourseHub | Student Course Registration</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+  <script src="app.js"></script>
+</head>
+<body ng-controller="CourseController">
+  <header class="topbar">
+    <div class="brand"><span class="cap">◆</span> CourseHub</div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <h1>Student Course Registration</h1>
+      <p>Register for courses and manage student records</p>
+    </section>
+
+    <section class="form-card">
+      <form name="studentForm" ng-submit="saveStudent()" novalidate>
+        <div class="form-grid">
+          <div class="field">
+            <label for="studentName">Student Name<span>*</span></label>
+            <input id="studentName" type="text" ng-model="form.name" placeholder="Enter student name" required>
+          </div>
+          <div class="field">
+            <label for="registerNo">Register Number<span>*</span></label>
+            <input id="registerNo" type="text" ng-model="form.registerNo" placeholder="Enter Register Number" required>
+          </div>
+          <div class="field">
+            <label for="department">Department<span>*</span></label>
+            <select id="department" ng-model="form.department" required>
+              <option value="">-- Select Department --</option>
+              <option ng-repeat="dept in departments" value="{{dept}}">{{dept}}</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="course">Course<span>*</span></label>
+            <select id="course" ng-model="form.course" required>
+              <option value="">-- Select Course --</option>
+              <option ng-repeat="course in courses" value="{{course}}">{{course}}</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="year">Year<span>*</span></label>
+            <select id="year" ng-model="form.year" required>
+              <option value="">-- Select Year --</option>
+              <option ng-repeat="year in years" value="{{year}}">{{year}}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-light" type="button" ng-click="clearForm()">Clear</button>
+          <button class="btn btn-primary" type="submit">{{editingIndex === null ? 'Register' : 'Update'}}</button>
+        </div>
+        <p class="message" ng-if="message" role="status">{{message}}</p>
+      </form>
+    </section>
+
+    <section class="records-card">
+      <div class="records-heading">
+        <h2>Registered Students</h2>
+        <input class="search" type="search" ng-model="searchText" placeholder="⌕  Search by name or register number">
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>S.No</th><th>Name</th><th>Register number</th><th>Department</th>
+              <th>Course</th><th>Year</th><th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="student in students | filter:searchText track by student.id">
+              <td>{{$index + 1}}</td>
+              <td>{{student.name}}</td>
+              <td>{{student.registerNo}}</td>
+              <td>{{student.department}}</td>
+              <td>{{student.course}}</td>
+              <td>{{student.year}}</td>
+              <td class="actions">
+                <button class="btn-small edit" type="button" ng-click="editStudent(student)">Edit</button>
+                <button class="btn-small delete" type="button" ng-click="deleteStudent(student)">Delete</button>
+              </td>
+            </tr>
+            <tr ng-if="(students | filter:searchText).length === 0">
+              <td colspan="7" class="empty">No student records found.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

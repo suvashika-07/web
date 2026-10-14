@@ -1,0 +1,14 @@
+{
+  "name": "coursehub-student-registration",
+  "version": "1.0.0",
+  "description": "Student course registration CRUD app using AngularJS, Node.js, Express and MongoDB",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.9.5"
+  }
+}
